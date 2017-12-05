@@ -20,7 +20,7 @@
                         <div class="admin-img">
                             <div class="admin-men-img">
                                
-                                <img class="home_user" src="/keeplaralatest/storage/app/public/{{  isset($post->author->avatar) ? $post->author->avatar : 'users/default.jpg' }}" alt="">
+                                <img class="home_user" src="{{asset('../storage/app/public')}}/{{  isset($post->author->avatar) ? $post->author->avatar : 'users/default.jpg' }}" alt="">
                                
                                 <?php /* <img src="{{url('/')}}/{{ $post->author->avatar }}" alt=""> */ ?>
                             </div>

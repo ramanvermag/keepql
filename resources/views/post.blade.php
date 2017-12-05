@@ -19,7 +19,7 @@
                         <div class="admin-img">
                              <div class="admin-men-img">
                                
-                                <img class="home_user" src="/keeplaralatest/storage/app/public/{{  isset($posts->author->avatar) ? $posts->author->avatar : 'users/default.jpg' }}" alt="">
+                                <img class="home_user" src="{{asset('../storage/app/public')}}/{{  isset($posts->author->avatar) ? $posts->author->avatar : 'users/default.jpg' }}" alt="">
                                
                                 <?php /* <img src="{{url('/')}}/{{ $post->author->avatar }}" alt=""> */ ?>
                             </div>
@@ -101,7 +101,7 @@
                             <div class="admin-img">
                                 <div class="admin-men-img">
                                     <?php /* keeplaralatest/storage/app/public/{{ $user->avatar }}*/ ?>
-                                    <img class="home_user" src="/keeplaralatest/storage/app/public/{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'users/default.jpg' }}" alt="">
+                                    <img class="home_user" src="{{asset('../storage/app/public')}}/{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'users/default.jpg' }}" alt="">
                                     <?php /* <img src="{{url('/')}}/{{ $post->author->avatar }}" alt=""> */ ?>
                                 </div>
                                 <h5>Answer As: <span class="cap"> {{ Auth::user()->name }} </span><span class="madal">

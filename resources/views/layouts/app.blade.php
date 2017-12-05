@@ -17,8 +17,7 @@
     <?php /* <link href="{{ asset('css/app.css') }}" rel="stylesheet">  */ ?>
 </head>
 <body>
-   
-
+ 
 <div class="header">
     <div class="container">
         <div class="row">
@@ -72,46 +71,14 @@
              
                         
                     </div>
-                    <!-- <span class="ask-btn"><a href="#"> Ask a question</a></span>
-                    <ul class="head-icon">
-                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
-                    </ul> -->
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--
-<div class="header-icon-part">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="nav-bottom">
-                    <ul>
-                        <li><a href="index.html">all</a></li>
-                        <li><a href="#">doctors</a></li>
-                        <li class="active"><a href="login.html">login</a></li>
-                        <li><a href="#">Sign up</a></li>
-                        <li><a href="#">contact</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="head-social">
-                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
-                    <a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
--->
 
     @yield('content')
-
  
 <div class="footer">
     <div class="container">

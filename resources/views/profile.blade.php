@@ -13,7 +13,10 @@
             <div class="col-md-4">
                 <div class="pro-sec pro-sec-1">
 
-                    <img src="/keeplaralatest/storage/app/public/{{ $user->avatar }}" class="kq_user_img"/>
+                    <img src="{{asset('../storage/app/public')}}/{{ $user->avatar }}" class="kq_user_img"/>
+
+
+                    
 
                     <h3 class="kq_user">{{ $user->name }}</h3>
                     <span class="madal">
