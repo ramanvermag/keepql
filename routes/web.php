@@ -36,10 +36,19 @@ Route::get('/home', function () {
     $posts = App\Post::all();
     return view('home', compact('posts'));
 });
+/*
+Route::post('profile/upload', function()
+{
+    return Plupload::receive('file', function ($file)
+    {
+        $file->move(storage_path() . '/app/public/users/November2017/', $file->getClientOriginalName());
+        return 'ready';
+    });
+});*/
 
 Route::get('post/{slug}' , 'HomeController@show');
 Route::get('profile', 'profileController@profile');
-Route::post('profile', 'profileController@updateAvatar');
+Route::post('profile/upload', 'profileController@updateAvatar');
 
 Route::get('profile_edit', 'profileController@profileEdit');
 Route::post('profile_edit', 'profileController@updateAvatar');
@@ -57,3 +66,4 @@ Route::get('/login', 'Auth\AuthController@authenticate');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+

@@ -12,15 +12,17 @@
             @endif
             <div class="col-md-4">
                 <div class="pro-sec pro-sec-1">
-
-                    <img src="{{asset('../storage/app/public')}}/{{ $user->avatar }}" class="kq_user_img"/>
-
+                     
+                    <img src="{{Storage::url('')}}{{ $user->avatar }}" class="kq_user_img"/>
+                    <?php echo Plupload::make([
+                        'url' => 'upload'
+                    ]);?>
 
                     
 
                     <h3 class="kq_user">{{ $user->name }}</h3>
                     <span class="madal">
-                        <img src="http://localhost/keeplaralatest/public/images/madal_03.png"> 3 
+                        <img src="{{asset('/images/madal_03.png')}}"> 3 
                     </span>
 
                 </div>

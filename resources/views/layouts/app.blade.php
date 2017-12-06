@@ -150,8 +150,6 @@
 <script src="{{ asset('js/share.js') }}"></script>
 <script src="https://use.fontawesome.com/8d36671da6.js"></script>
 <script type="text/javascript" src="{{ URL:: asset('js/jquery.meanmenu.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL:: asset('js/plupload.full.min.js') }}"></script>
-<script type="text/javascript" src="{{ URL:: asset('js/picupload.js') }}"></script>
 
 <script type="text/javascript">
  $(document).ready(function () {
