@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL:: asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL:: asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL:: asset('vendor/tcg/voyager/assets/js/skins/voyager/skin.min.css') }}">
+    <script type="text/javascript" src="{{ URL:: asset('vendor/tcg/voyager/assets/js/app.js') }}"></script>
     <?php /* <link href="{{ asset('css/app.css') }}" rel="stylesheet">  */ ?>
 </head>
 <body>
@@ -146,7 +147,7 @@
 <script type="text/javascript" src="{{ URL:: asset('js/owl.carousel.min.js') }}"></script>
 <!-- <script type="text/javascript" src="{{ URL:: asset('js/jquery.meanmenu.min.js') }}"></script> -->
 <script src="https://use.fontawesome.com/26ae5f8be1.js"></script>
-<script type="text/javascript" src="{{ URL:: asset('vendor/tcg/voyager/assets/js/app.js') }}"></script>
+
 <script src="{{ asset('js/share.js') }}"></script>
 <script src="https://use.fontawesome.com/8d36671da6.js"></script>
 <script type="text/javascript" src="{{ URL:: asset('js/jquery.meanmenu.min.js') }}"></script>

@@ -294,3 +294,29 @@ li.bell a { padding: 0; }
     color: #E74C3C;
     padding: 6px 0 5px;
 }
+/*plupload css start*/
+div#-container{
+    display: none;
+}
+#pro-sec:hover div#-container{
+    display:block;
+}
+.button_container{
+    display: none;
+}
+div#-container {
+    position:absolute;
+    top: 15px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+button#-browse-button {
+    background: rgba(0,0,0,0.3);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 0;
+    font-size: 30px;
+}
+/*plupload css end*/

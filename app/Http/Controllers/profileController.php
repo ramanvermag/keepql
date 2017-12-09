@@ -23,9 +23,7 @@ class profileController extends Controller
 
     }
     public function updateAvatar(Request $request){
-
-        
-
+          $abs_path='';
         if( $request->hasFile('file') ){
             $avatar = $request->file('file');
             $filename = time() . '.'. $avatar->getClientOriginalExtension();
@@ -35,9 +33,9 @@ class profileController extends Controller
             $user = Auth::user();
             $user->avatar = 'users/November2017/'.$filename;
             $user->save();
-           
+            $abs_path= Storage::url('').'users/November2017/'.$filename;
         }
-        return ;
+        return  response()->json(array("status"=>true,"file"=>$abs_path));
          //return view('profile', array('user'=> Auth::User() ) ); 
 
     } 

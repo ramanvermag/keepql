@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <h3>{{ $post->title }}</h3>
-                    <p>{!! $post->body !!}</p>
+                    {!! $post->body !!}
                     <span class="tags">
                         <h4>tags:</h4>
                         <a href="#">J-Query</a>
