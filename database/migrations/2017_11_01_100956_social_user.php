@@ -14,8 +14,8 @@ class SocialUser extends Migration
     {
         //
         Schema::table('users', function ($table) {
-            $table->string('social_id');
-            $table->string('account_type');
+            $table->string('social_id')->nullable($value = true);
+            $table->string('account_type')->nullable($value = true);
         });
     }
 

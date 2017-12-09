@@ -284,6 +284,12 @@ li.bell a { padding: 0; }
     color: #3498DB;
 }
 .user-stats-3{border-bottom: 3px solid #3498DB;}
+.user-info i.fa {
+    width: 25px;
+    text-align: center;
+}
+
+
 .bio{
     padding: 28px 0 10px;
 }

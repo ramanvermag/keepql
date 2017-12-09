@@ -19,7 +19,7 @@
                         <button type="button" id="start-upload" class="btn btn-success">Save</button>
                         <button type="button" id="cancel-upload" class="btn btn-danger">Cancel</button>
                     </div>
-                    
+
                     <?php 
                         echo Plupload::make([
                             'url' => 'upload',
@@ -94,7 +94,7 @@
                     <div class="">
 
                         <div class="col-md-12">
-                            <ul>
+                            <ul class="user-info">
                                 <li><i class="fa fa-briefcase" aria-hidden="true"></i> Works at Unique Coders</li>
                                 <li><i class="fa fa-user-circle-o" aria-hidden="true"></i> Working as Software Engineer</li>
                                 <li><i class="fa fa-map-marker" aria-hidden="true"></i> Lives in Anaheim USA</li>
