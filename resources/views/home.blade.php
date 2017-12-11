@@ -14,6 +14,14 @@
 
 
             @foreach($posts as $post)
+                
+                <?php //print_r($postCatRel[0]->post_id); die(); ?>
+                <?php 
+                //print_r ($postCat);
+                //print_r ($postCat->post_id);
+                //print_r ($postCat->cat_id);
+                ?>
+
 
                 <div class="ques-desn">
                     <div class="quest-part1">
@@ -32,7 +40,20 @@
                         </div>
                         <div class="admin-nav">
                             <ul>
-                                <li><a href="#"><span>in</span> {{ $post->category->name}}  </a></li>
+                                <li><a href="#"><span>in</span> 
+
+                                <?php 
+                                    
+                                    $categories = array();
+                                    foreach($post->category as $cat){
+                                        $categories[]= $cat->category->name;
+                                    }
+                                    $cat = implode(" | ",$categories);
+                                   
+                                ?>
+                                {{ isset($cat) ? $cat : 'undefined' }}
+
+                                </a></li>
                                 <!-- <li><a href="#">lawyers</a></li>
                                 <li><a href="#">nurses</a></li> -->
                             </ul>
@@ -71,270 +92,16 @@
                             ->googlePlus()
                             ->linkedin('Extra linkedin summary can be passed here'); ?>
 
-                            <?php /*<ul>
-                                <li class="share">Share</li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a id="more" href="#">more</a>
-                                <ul class="show-icon">
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-stumbleupon" aria-hidden="true"></i></a></li>
-                                </ul>
-                                </li>
-                                
-                            </ul>*/ ?>
                         </div>
                     </div>
                 </div>
+
             @endforeach
-<? /* these are repeated questions
+<? /* these are madals
 
-                <div class="ques-desn">
-                    <div class="quest-part1">
-                        <div class="admin-img">
-                            <div class="admin-men-img">
-                                <img src="images/admin-men.png" alt="">
-                            </div>
-                            <h5>BY <span>William Burk</span><span class="madal sliver"><img src="images/madal_06.png">5</span></h5>
-                        </div>
-                        <div class="admin-nav">
-                            <ul>
-                                <li><a href="#"><span>in</span> doctors</a></li>
-                                <li><a href="#">lawyers</a></li>
-                                <li><a href="#">nurses</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <h3>This is second question?</h3>
-                    <p>There are many variations of passages of Lorem Ipsum 
-                    available, but the majority have suffered alteration in some form, by 
-                    injected humour?</p>
-                    <span class="tags">
-                        <h4>tags:</h4>
-                        <a href="#">J-Query</a>
-                        <a href="#">Java Script</a>
-                    </span>
-                    <div class="vote-part">
-                        <a href="#">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <li><a href="#">vote<span>3</span></a></li>
-                            <li><a href="#">Answers<span>15</span></a></li>
-                            <li><a href="#">Views<span>35</span></a></li>
-                        </ul>
-                    </div>
-                    <div class="social-share">
-                        <div class="share-desn">    
-                            <h5><i class="fa fa-clock-o" aria-hidden="true"></i>3 Hours ago</h5>
-                            <h5><i class="fa fa-map-marker" aria-hidden="true"></i>NewYork</h5>
-                        </div>
-                        <div class="share-section">
-                            <ul>
-                                <li class="share">Share</li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a id="more" href="#">more</a>
-                                <ul class="show-icon">
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-stumbleupon" aria-hidden="true"></i></a></li>
-                                </ul>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="ques-desn">
-                    <div class="quest-part1">
-                        <div class="admin-img">
-                            <div class="admin-men-img">
-                                <img src="images/admin-men.png" alt="">
-                            </div>
-                            <h5>BY <span>Henry</span><span class="madal brown"><img src="images/madal_08.png">3</span></h5>
-                        </div>
-                        <div class="admin-nav">
-                            <ul>
-                                <li><a href="#"><span>in</span> doctors</a></li>
-                                <li><a href="#">lawyers</a></li>
-                                <li><a href="#">nurses</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <h3>This is third question?</h3>
-                    <p>There are many variations of passages of Lorem Ipsum 
-                    available, but the majority have suffered alteration in some form, by 
-                    injected humour?</p>
-                    <span class="tags">
-                        <h4>tags:</h4>
-                        <a href="#">J-Query</a>
-                        <a href="#">Java Script</a>
-                    </span>
-                    <div class="vote-part">
-                        <a href="#">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <li><a href="#">vote<span>3</span></a></li>
-                            <li><a href="#">Answers<span>15</span></a></li>
-                            <li><a href="#">Views<span>35</span></a></li>
-                        </ul>
-                    </div>
-                    <div class="social-share">
-                        <div class="share-desn">    
-                            <h5><i class="fa fa-clock-o" aria-hidden="true"></i>3 Hours ago</h5>
-                            <h5><i class="fa fa-map-marker" aria-hidden="true"></i>NewYork</h5>
-                        </div>
-                        <div class="share-section">
-                            <ul>
-                                <li class="share">Share</li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a id="more" href="#">more</a>
-                                <ul class="show-icon">
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-stumbleupon" aria-hidden="true"></i></a></li>
-                                </ul>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="ques-desn">
-                    <div class="quest-part1">
-                        <div class="admin-img">
-                            <div class="admin-men-img">
-                                <img src="images/admin-men.png" alt="">
-                            </div>
-                            <h5>BY <span>James Peter</span><span class="madal sliver"><img src="images/madal_06.png">5</span></h5>
-                        </div>
-                        <div class="admin-nav">
-                            <ul>
-                                <li><a href="#"><span>in</span> doctors</a></li>
-                                <li><a href="#">lawyers</a></li>
-                                <li><a href="#">nurses</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <h3>This is fourth question?</h3>
-                    <p>There are many variations of passages of Lorem Ipsum 
-                    available, but the majority have suffered alteration in some form, by 
-                    injected humour?</p>
-                    <span class="tags">
-                        <h4>tags:</h4>
-                        <a href="#">J-Query</a>
-                        <a href="#">Java Script</a>
-                    </span>
-                    <div class="vote-part">
-                        <a href="#">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <li><a href="#">vote<span>3</span></a></li>
-                            <li><a href="#">Answers<span>15</span></a></li>
-                            <li><a href="#">Views<span>35</span></a></li>
-                        </ul>
-                    </div>
-                    <div class="social-share">
-                        <div class="share-desn">    
-                            <h5><i class="fa fa-clock-o" aria-hidden="true"></i>3 Hours ago</h5>
-                            <h5><i class="fa fa-map-marker" aria-hidden="true"></i>NewYork</h5>
-                        </div>
-                        <div class="share-section">
-                            <ul>
-                                <li class="share">Share</li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a id="more" href="#">more</a>
-                                <ul class="show-icon">
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-stumbleupon" aria-hidden="true"></i></a></li>
-                                </ul>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="ques-desn">
-                    <div class="quest-part1">
-                        <div class="admin-img">
-                            <div class="admin-men-img">
-                                <img src="images/admin-men.png" alt="">
-                            </div>
-                            <h5>BY <span>James Peter</span><span class="madal brown"><img src="images/madal_08.png">2</span></h5>
-                        </div>
-                        <div class="admin-nav">
-                            <ul>
-                                <li><a href="#"><span>in</span> doctors</a></li>
-                                <li><a href="#">lawyers</a></li>
-                                <li><a href="#">nurses</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <h3>This is fifth question?</h3>
-                    <p>There are many variations of passages of Lorem Ipsum 
-                    available, but the majority have suffered alteration in some form, by 
-                    injected humour?</p>
-                    <span class="tags">
-                        <h4>tags:</h4>
-                        <a href="#">J-Query</a>
-                        <a href="#">Java Script</a>
-                    </span>
-                    <div class="vote-part">
-                        <a href="#">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <li><a href="#">vote<span>3</span></a></li>
-                            <li><a href="#">Answers<span>15</span></a></li>
-                            <li><a href="#">Views<span>35</span></a></li>
-                        </ul>
-                    </div>
-                    <div class="social-share">
-                        <div class="share-desn">    
-                            <h5><i class="fa fa-clock-o" aria-hidden="true"></i>3 Hours ago</h5>
-                            <h5><i class="fa fa-map-marker" aria-hidden="true"></i>NewYork</h5>
-                        </div>
-                        <div class="share-section">
-                            <!-- <div class="a2a_kit a2a_kit_size_32 a2a_default_style a2a_follow">
-                                <a class="a2a_button_facebook" data-a2a-follow="AddToAny"></a>
-                                <a class="a2a_button_twitter" data-a2a-follow="AddToAny"></a>
-                                <a class="a2a_button_google_plus" data-a2a-follow="+google"></a>
-                                <a class="a2a_button_instagram" data-a2a-follow="kevin"></a>
-                                <a class="a2a_button_pinterest" data-a2a-follow="Pinterest"></a>
-                                <a class="a2a_button_linkedin" data-a2a-follow="reidhoffman"></a>
-                                <a class="a2a_button_linkedin_company" data-a2a-follow="linkedin"></a>
-                                <a class="a2a_button_vimeo" data-a2a-follow="staff"></a>
-                                <a class="a2a_button_youtube" data-a2a-follow="YouTube"></a>
-                                <a class="a2a_button_youtube_channel" data-a2a-follow="UCF0pVplsI8R5kcAqgtoRqoA"></a>
-                                <a class="a2a_button_tumblr" data-a2a-follow="staff"></a>
-                                <a class="a2a_button_github" data-a2a-follow="torvalds"></a>
-                                <a class="a2a_button_foursquare" data-a2a-follow="dens"></a>
-                                <a class="a2a_button_snapchat" data-a2a-follow="teamsnapchat"></a>
-                                <a class="a2a_button_behance" data-a2a-follow="Adobe"></a>
-                                <a class="a2a_button_flickr" data-a2a-follow="flickr"></a>
-                            </div>
-                            -->
-                            <ul>
-                                <li class="share">Share</li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a id="more" href="#">more</a>
-                                <ul class="show-icon">
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-stumbleupon" aria-hidden="true"></i></a></li>
-                                </ul>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
+<h5>BY <span>William Burk</span><span class="madal sliver"><img src="images/madal_06.png">5</
+<h5>BY <span>Henry</span><span class="madal brown"><img src="images/madal_08.png">3</span></h5>
+                                               
 */ ?>
 
                 <div class="col-md-12">

@@ -23,7 +23,8 @@ class profileController extends Controller
 
     }
     public function updateAvatar(Request $request){
-          $abs_path='';
+        
+        $abs_path='';
         if( $request->hasFile('file') ){
             $avatar = $request->file('file');
             $filename = time() . '.'. $avatar->getClientOriginalExtension();

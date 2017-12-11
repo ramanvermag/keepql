@@ -29,7 +29,19 @@
                         </div>
                         <div class="admin-nav">
                             <ul>
-                                <li><a href="#"><span>in</span> {{ isset($posts->category->name) ? $posts->category->name : 'undefied' }} </a></li>
+                                <li><a href="#"><span>in</span> 
+
+                                <?php 
+                                    
+                                    $categories = array();
+                                    foreach($posts->category as $cat){
+                                        $categories[]= $cat->category->name;
+                                    }
+                                    $cat = implode(" | ",$categories);
+                                   
+                                ?>
+                                {{ isset($cat) ? $cat : 'undefined' }}
+                                   </a></li>
                                 <!-- <li><a href="#">lawyers</a></li>
                                 <li><a href="#">nurses</a></li> -->
                             </ul>
