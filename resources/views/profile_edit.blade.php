@@ -237,6 +237,7 @@ $(document).ready(function(){
 			}
 		})
 	});
+	
 	$('.save-password-info').on('click',function(){
 		$.ajax({
 			type:'POST',
