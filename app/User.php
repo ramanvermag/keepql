@@ -1,7 +1,8 @@
 <?php
 
 namespace App;
-
+use Auth;
+use App\Rating;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -15,7 +16,7 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'social_id', 'account_type'
+        'id','name', 'email', 'password', 'social_id', 'account_type','country','state','city','last_logged_in','biography'
     ];
 
     /**
@@ -26,4 +27,19 @@ class User extends \TCG\Voyager\Models\User
     protected $hidden = [
         'password', 'remember_token',
     ];
+    public function posts(){
+        return $this->hasMany('App\Post','author_id','id')->where('status','PUBLISHED');
+    }
+    public function saveRating($data){
+        $rating = Rating::where('profile_rated',$data['userId'])
+                    ->where('rated_by',Auth::user()->id)->first();
+        $obj = new Rating;
+        if(!empty($rating)){
+            $obj = Rating::find($rating->id);
+        }
+        $obj->rating = $data['stars'];
+        $obj->profile_rated = $data['userId'];
+        $obj->rated_by = Auth::user()->id;
+        $obj->save();
+    }
 }

@@ -1,49 +1,63 @@
 @extends('layouts.app')
 
 @section('content')
-
+<style>
+hr{   
+    float: left;
+    width: 100%;
+    margin: 5px 0px 25px 0px;
+    border-bottom: 2px solid #9ea9b1;
+}
+.vote-icons {
+    font-size: 17px;
+    margin-left: 7px;
+    cursor: pointer;
+}
+</style>
 <div class="question-section">
     <div class="container">
         <div class="row">
             @if (session('status'))
                 <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
                     {{ session('status') }}
                 </div>
             @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-9">
-
-               
-                <?php //print_r($post);die(); ?>
+                <!-- Question -->
                 <div class="ques-desn">
                     <div class="quest-part1">
                         <div class="admin-img">
                              <div class="admin-men-img">
-                               
                                 <img class="home_user" src="{{Storage::url('')}}{{  isset($posts->author->avatar) ? $posts->author->avatar : 'users/default.jpg' }}" alt="">
-                               
-                                <?php /* <img src="{{url('/')}}/{{ $post->author->avatar }}" alt=""> */ ?>
                             </div>
-                            <h5>By <span class="cap"> {{ isset($posts->author->name) ? $posts->author->name : 'Anonymous' }} </span><span class="madal">
-                                <?php /* <img src="{{ Voyager::image( $post->image ) }}"> */ ?>
+                            <h5>By <a href="/view-user-profile/{{ $posts->author->id }}"><span class="cap"> {{ isset($posts->author->name) ? $posts->author->name : 'Anonymous' }} </span><span class="madal">
                                 <img src="{{ URL:: asset('images/madal_03.png') }}"> 3 </span></h5>
                         </div>
                         <div class="admin-nav">
                             <ul>
-                                <li><a href="#"><span>in</span> 
-
+                                <li><a href="#"><span>in</span>
                                 <?php 
                                     
                                     $categories = array();
                                     foreach($posts->category as $cat){
-                                        $categories[]= $cat->category->name;
+                                        $categories[]= $cat->name;
                                     }
                                     $cat = implode(" | ",$categories);
                                    
                                 ?>
                                 {{ isset($cat) ? $cat : 'undefined' }}
                                    </a></li>
-                                <!-- <li><a href="#">lawyers</a></li>
-                                <li><a href="#">nurses</a></li> -->
                             </ul>
                         </div>
                     </div>
@@ -51,122 +65,153 @@
                     <p>{!! isset($posts->body) ? $posts->body : 'undefied' !!}</p>
                     <span class="tags">
                         <h4>tags:</h4>
-                        <a href="#">J-Query</a>
-                        <a href="#">Java Script</a>
+                        @if(!empty($posts->tags))
+                            <?php
+                                $tags = explode(',',$posts->tags);
+                                foreach($tags as $tag){
+                            ?>     
+                                <a href="javascript:;"><?= $tag; ?></a>
+                            <?php 
+                                }
+                            ?>
+                        @endif
                     </span>
-                    <!--
-                    <div class="vote-part">
-                        <a href="">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a><br/>
-                        <a href="">Request <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <li><a href="#">Vote<span>3</span></a></li>
-                            <li><a href="#">Answers<span>15</span></a></li>
-                            <li><a href="#">Views<span>35</span></a></li>
-                        </ul>
-                    </div>
-                    -->
                     <div class="social-share">
                         <div class="share-desn">    
                             <h5><i class="fa fa-clock-o" aria-hidden="true"></i>
-
                                 {{ $posts->created_at->format('F d, Y') }} 
-                                <?php //time_ago( $time ); ?> 
                             </h5>
                             <h5><i class="fa fa-map-marker" aria-hidden="true"></i>NewYork</h5>
                         </div>
                         <div class="share-section">
-                            
-                            <?php /* 
-                            page('http://uniquecoders.in', 'Keep Questioning')
-                            currentPage() */ ?>
                             <?php echo Share::currentPage()
                             ->facebook()
                             ->twitter()
                             ->googlePlus()
                             ->linkedin('Extra linkedin summary can be passed here'); ?>
-
-                            <?php /*<ul>
-                                <li class="share">Share</li>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a id="more" href="#">more</a>
-                                <ul class="show-icon">
-                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-stumbleupon" aria-hidden="true"></i></a></li>
-                                </ul>
-                                </li>
-                                
-                            </ul>*/ ?>
                         </div>
                     </div>
                 </div>
-                
-                  <div class="ans-desn">
-                    <h5> Submit your answer here: </h5>
-                    <div class="comment">
-                        <textarea class="form-control richTextBox" id="richtextbody" name="body"></textarea>
-                                                
-                        <a class="btn btn-danger" href="/post/{{$posts->slug}}">Publish <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <div class="cmntg_user">
+                <!-- Answers -->
+                @if(!empty($posts->answers))
+                <div class="all-answers-div">
+                    <h3 class="answers-heading">{{ $posts->answers->count() }} Answers</h3>
+                    @foreach($posts->answers as $answer)
+                    <div class="answers-div">
+                        <div class="quest-part1">
                             <div class="admin-img">
                                 <div class="admin-men-img">
-                                    <?php /* keeplaralatest/storage/app/public/{{ $user->avatar }}*/ ?>
-                                    <img class="home_user" src="{{Storage::url('')}}{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'users/default.jpg' }}" alt="">
-                                    <?php /* <img src="{{url('/')}}/{{ $post->author->avatar }}" alt=""> */ ?>
+                                    <img class="home_user" src="{{Storage::url('')}}{{  isset($answer->author->avatar) ? $answer->author->avatar : 'users/default.jpg' }}" alt="">
                                 </div>
-                                <h5>Answer As: <span class="cap"> {{ Auth::user()->name }} </span><span class="madal">
-                                    <?php /*  <img src="{{ Voyager::image( $post->image ) }}"> */ ?>
-                                    <img src="{{ URL:: asset('images/madal_03.png') }}"> 3 </span></h5>
+                                <h5>By <a href="/view-user-profile/{{ $answer->author->id }}"><span class="cap"> {{ isset($answer->author->name) ? $answer->author->name : 'Anonymous' }} </span></h5>
+                                <div class="total-votes total-votes-count-{{ $answer->id }}">
+                                    <i class="fa fa-thumbs-o-up vote-icons " aria-hidden="true"></i> : 
+                                    <?php
+                                    $likes = 0; $disLikes = 0;
+                                    if(!empty($answer->votes)){
+                                        foreach($answer->votes as $array){
+                                            $likes += $array->like_status;
+                                            $disLikes += $array->dislike_status;
+                                        }
+                                    }
+                                    echo $likes;
+                                    ?>
+                                    <i class="fa fa-thumbs-o-down vote-icons" aria-hidden="true"></i> : <?= $disLikes ?>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <div class="total-votes">
+                                    <?php
+                                        $like_class    = 'fa-thumbs-o-up';
+                                        $dislike_class = 'fa-thumbs-o-down';
+                                        if(!empty($answer->user_votes[0])){
+                                            if($answer->user_votes[0]->like_status == 1){
+                                                $like_class    = 'fa-thumbs-up';
+                                            }
+                                            if($answer->user_votes[0]->dislike_status == 1){
+                                                $dislike_class    = 'fa-thumbs-down';
+                                            }
+                                        }
+                                    ?>
+                                    <i class="fa <?= $like_class; ?> vote-icons icon-vote" data-answer-id="{{ $answer->id }}" data-icon-name="up" aria-hidden="true"></i>
+                                    <i class="fa <?= $dislike_class; ?> vote-icons icon-vote" data-answer-id="{{ $answer->id }}" data-icon-name="down" aria-hidden="true"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>  
-
+                        <p>{!! isset($answer->answer) ? $answer->answer : 'undefied' !!}</p>
+                    </div>
+                    <hr>
+                    @endforeach
                 </div>
-      
-<!--
-                <div class="col-md-12">
-                    <div class="pagination">
-
-
-
-                        <ul>
-                            <li class="prev"><a href="#"><i class="fa fa-angle-double-left" aria-hidden="true"></i></a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">6</a></li>
-                            <li class="next"><a href="#"><i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-                        </ul>
+                @endif
+                <!-- Answers -->
+                <form method="POST" action="{{ url('post/answers') }}">
+                    {{ csrf_field() }}
+                    <div class="ans-desn">
+                        <h5> Submit your answer here: </h5>
+                        <div class="comment">
+                            <textarea class="form-control richTextBox" id="richtextbody" name="answer"></textarea>
+                            <button type="submit" class="btn btn-danger">Publish <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+                            <div class="cmntg_user">
+                                <div class="admin-img">
+                                    <div class="admin-men-img">
+                                        <img class="home_user" src="{{Storage::url('')}}{{ isset(Auth::user()->avatar) ? Auth::user()->avatar : 'users/default.jpg' }}" alt="">
+                                    </div>
+                                    <h5>Answer As: <span class="cap"> {{ Auth::user()->name }} </span><span class="madal">
+                                        <img src="{{ URL:: asset('images/madal_03.png') }}"> 3 </span></h5>
+                                </div>
+                            </div>
+                        </div>  
+                        <input type="hidden" name="post_id" value="{{ $posts->id }}">
                     </div>
-                </div>-->
+                </form>
             </div>
-            <div class="col-md-3">
-                <div class="popular-ques">
-                    <div class="ques-numbr">
-                        <h5>Question<span class="numb">25,859,64</span></h5>
-                    </div>
-                    <div class="ques-numbr member">
-                        <h5>Member<span class="numb">10,345</span></h5>
-                    </div>
-                    <div class="popular-section">
-                        <h5>Popular Question</h5>
-                        <ul>
-                            <li><a href="#">There are many variations of passages of Lorem Ipsum available?</a></li>
-                            <li><a href="#">There are many variations of passages of Lorem Ipsum available?</a></li>
-                            <li><a href="#">There are many variations of passages of Lorem Ipsum available?</a></li>
-                            <li><a href="#">There are many variations of passages of Lorem Ipsum available?</a></li>
-                            <li><a href="#">There are many variations of passages of Lorem Ipsum available?</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
+            @include('elements/sidebar')
         </div>
     </div>
 </div>
+<script type="text/javascript">
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+$(document).ready(function(){
+    $('.icon-vote').on('click',function(){
+        var icon_name = $(this).attr('data-icon-name');
+        if(icon_name=="up"){
+            var pointer = $(this).next();
+            var opp_icon_name = 'down';
+        }
+        else{
+            var pointer = $(this).prev();
+            var opp_icon_name = 'up';
+        }
+        if($(this).hasClass('fa-thumbs-o-'+icon_name)){ 
+            var icon_value = 1;
+            $(this).addClass('fa-thumbs-'+icon_name);
+            $(this).removeClass('fa-thumbs-o-'+icon_name);
 
+            pointer.addClass('fa-thumbs-o-'+opp_icon_name);
+            pointer.removeClass('fa-thumbs-'+opp_icon_name);
+        }
+        else{
+            var icon_value = 0;
+            $(this).addClass('fa-thumbs-o-'+icon_name);
+            $(this).removeClass('fa-thumbs-'+icon_name);
+        }
+        var answer_id = $(this).attr('data-answer-id');
+        $.ajax({
+            type:'POST',
+            data:{
+                answer_id:answer_id,icon_value:icon_value,icon_name:icon_name
+            },
+            url:'/post/saveVotes',
+            success:function(resp){
+                $('.total-votes-count-'+answer_id).html(resp);
+            }
+        })
+    });
+})
+</script>
 @endsection

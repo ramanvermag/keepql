@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-  
 <div class="question-section">
     <div class="container">
         <div class="row">
@@ -12,80 +10,37 @@
             @endif
             <div class="col-md-4">
                 <div id="pro-sec" class="pro-sec pro-sec-1">
-                     
-                    <img src="{{Storage::url('')}}{{ $user->avatar }}" id="kq_user_img" class="kq_user_img"/>
-
-                    <div class="button_container">
-                        <button type="button" id="start-upload" class="btn btn-success">Save</button>
-                        <button type="button" id="cancel-upload" class="btn btn-danger">Cancel</button>
-                    </div>
-
-                    <?php 
-                        echo Plupload::make([
-                            'url' => 'upload',
-                            'dragdrop' => true,
-                            'multi_selection'=>false,
-                            'browse_button'=>'-browse-button',
-                            'drop_element'=>'kq_user_img'
-                        ]);
-                    ?>
-                    <script type="text/javascript">
-                        _uploader.bind('FilesAdded', function(up,files) {
-                             _uploader.start();
-                            plupload.each(files, function(file) {
-                                var preloader = new mOxie.Image();
-                                preloader.onload = function() {
-                                    preloader.downsize( 300, 300 );
-                                    $(".kq_user_img").prop( "src", preloader.getAsDataURL() );
-                                };
-                                // Wiki: https://github.com/moxiecode/plupload/wiki/File
-                                preloader.load( file.getSource() );
-                                document.querySelector('.button_container').style.display="block";
-                            });
-                        });
-                        
-                        var imgpath = document.querySelector('.kq_user_img').getAttribute('src');
-
-                        $(function(){  
-                            //on cancel 
-                            $('#cancel-upload').on('click', function(){
-                                $(".kq_user_img").attr( "src", imgpath );
-                                $('.button_container').css("display","none");
-                                return false;
-                            });
-                            //on save
-                            $('#start-upload').on('click', function(){
-                                _uploader.start();
-                                $('.button_container').css("display","none");
-                            });
-                        });
-                        
-                        _uploader.bind('FileUploaded', function(up,file,response) {
-                            var res = JSON.parse(response.response);
-                            $(".kq_user_img").attr('src',res.file);
-                            //location.reload();
-                        });
-                    </script>
-
-                    
-
-                    <h3 class="kq_user">{{ $user->name }}</h3>
+                    <img src="{{Storage::url('')}}{{ $userData[0]['avatar'] }}" id="kq_user_img" class="kq_user_img"/>
+                    <h3 class="kq_user">{{ $userData[0]['name'] }}</h3>
                     <span class="madal">
                         <img src="{{asset('/images/madal_03.png')}}"> 3 
                     </span>
                     <div>
-                        <a class="btn btn-primary" href="{{ url('edit-profile') }}">Edit Profile</a>
+                        <div data-user="{{ $userData[0]['id'] }}" class="awesomeRating"></div>
+                        <input type="hidden" name="awsomeRatingValue" class="awesomeRatingValue">
                     </div>
                 </div>
                 <div class="pro-sec pro-sec-2">
+                    <?php $link1='javascript:;'; ?>
+                    @if($answersCount > 0)
+                    <?php $link1='/view-user-answers/'.$userData[0]['id']; ?>
+                    @endif
                     <div class="col-xs-4 user-stats user-stats-1">
-                        <span class="span-1">8,420</span> answers
+                        <a href="{{ $link1 }}">
+                            <span class="span-1">{{ $answersCount }}</span><br> answers
+                        </a>
                     </div> 
+                    <?php $link2='javascript:;'; ?>
+                    @if(count($userData[0]['posts']) > 0)
+                    <?php $link2='/view-questions/'.$userData[0]['id']; ?>
+                    @endif
                     <div class="col-xs-4 user-stats user-stats-2">
-                        <span class="span-2">69</span> questions
-                    </div> 
+                        <a href="{{ $link2 }}">
+                            <span class="span-2">{{ count($userData[0]['posts']) }}</span><br> questions
+                        </a>
+                    </div>
                     <div class="col-xs-4 user-stats user-stats-3">
-                        <span class="span-3">39,989</span> views
+                        <span class="span-3">{{ $postViews }}</span><br> views
                     </div>
                 </div>
                 <div class="pro-sec pro-sec-3">
@@ -135,4 +90,31 @@
         </div>
     </div>
 </div>
+<link href="{{ asset('css/awesomerating.min.css') }}" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="{{ asset('js/awesomeRating.min.js') }}"></script>
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('.awesomeRating').awesomeRating({
+        valueInitial: '<?php if(!empty($ratings[0]->sum)){ echo $ratings[0]->sum; }else{ echo 1; } ?>',
+        values: ["1","2","3","4","5"],
+        targetSelector: "input.awesomeRatingValue"
+    });
+    $('.awesomeRating').click(function(){
+        var userId = $(this).attr('data-user');
+        var stars = $('.awesomeRatingValue').val();
+        $.ajax({
+            type:'post',
+            data:{
+                userId:userId,stars:stars
+            },
+            url:'/users/profile-rating',
+            success:function(resp){
+            }
+        });
+    });
+</script>
 @endsection

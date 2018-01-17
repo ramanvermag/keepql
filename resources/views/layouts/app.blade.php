@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ Voyager::setting('.site_title') }}</title>
+    <title>Keep Questions</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Poppins:300" rel="stylesheet">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL:: asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL:: asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL:: asset('vendor/tcg/voyager/assets/js/skins/voyager/skin.min.css') }}">
+    <script type="text/javascript" src="{{ URL:: asset('js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ URL:: asset('vendor/tcg/voyager/assets/js/app.js') }}"></script>
     <?php /* <link href="{{ asset('css/app.css') }}" rel="stylesheet">  */ ?>
 </head>
@@ -29,20 +30,19 @@
                 <div class="header-nav-part">
                     <div class="nav">
 
-<!-- Right Side Of Navbar -->
+                    <!-- Right Side Of Navbar -->
                
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                             <li><a href="{{ URL:: asset('/home') }}">Home</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Contact</a></li>
-
-                        @if(!Auth::user())
+                            @if(!Auth::user())
                             
-                            <li><a href="{{ url('login') }}">Login</a></li>
-                            <li><a href="{{ url('register') }}">Signup</a></li>
+                                <li><a href="{{ url('login') }}">Login</a></li>
+                                <li><a href="{{ url('register') }}">Signup</a></li>
                             
-                        @else
+                            @else
                             <ul class="head-icon">
                                 <li class="bell"><a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
                                 <li class="dropdown">
@@ -66,7 +66,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <li><span class="ask-btn"><a href="#"> Ask a question</a></span></li>
+                            <li><span class="ask-btn"><a href="{{ url('ask-a-question') }}"> Ask a question</a></span></li>
                         @endif
                     </ul>
              
@@ -97,7 +97,7 @@
                 <div class="col-sm-2">
                     <div class="footer-nav">
                         <ul>
-                            <li><a href="#">Home</a></li>
+                            <li><a href="{{ URL:: asset('/home') }}">Home</a></li>
                             <li><a href="#">About</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
@@ -106,8 +106,8 @@
                 <div class="col-sm-2">
                     <div class="footer-nav">
                         <ul>
-                            <li><a href="#">Login</a></li>
-                            <li><a href="#">Sign Up</a></li>
+                            <li><a href="{{ url('login') }}">Login</a></li>
+                            <li><a href="{{ url('register') }}">Sign Up</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                     </div>
@@ -140,11 +140,11 @@
 </div>
 
 
-<!-- <script type="text/javascript" src="{{ URL:: asset('js/jquery.js') }}"></script> -->
+
 <!-- <script type="text/javascript" src="{{ URL:: asset('js/bootstrap.min.js') }}"></script> -->
 
 <?php /* <script src="{{ asset('js/app.js') }}"></script> */ ?>
-<script type="text/javascript" src="{{ URL:: asset('js/owl.carousel.min.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ URL:: asset('js/owl.carousel.min.js') }}"></script> -->
 <!-- <script type="text/javascript" src="{{ URL:: asset('js/jquery.meanmenu.min.js') }}"></script> -->
 <script src="https://use.fontawesome.com/26ae5f8be1.js"></script>
 

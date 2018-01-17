@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="login-section">
     <div class="container">
         <div class="login-form">
@@ -65,6 +64,70 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('country') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-12">
+                                <select class="form-control" name="country" required="true">
+                                    <option value="">Select Country</option>
+                                    @foreach($allCountries as $country)
+                                        <option value="{{ $country->country_name }}">{{ $country->country_name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('country'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('country') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-12">
+                                <input  type="text" class="form-control" name="state" placeholder="State" required="true">
+
+                                @if ($errors->has('state'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('state') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-12">
+                                <input  type="text" class="form-control" name="city" placeholder="City" required="true">
+
+                                @if ($errors->has('city'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <!-- <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-12">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required="true">
+
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-12">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required="true">
+
+                                @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div> -->
                         <div class="form-group">
                             <div class="col-md-12">
                                 <span class="button">

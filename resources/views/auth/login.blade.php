@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="login-section">
     <div class="container">
         <div class="login-form">

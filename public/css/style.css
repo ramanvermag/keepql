@@ -326,3 +326,37 @@ button#-browse-button {
     font-size: 30px;
 }
 /*plupload css end*/
+
+.all-answers-div{
+    background: #fff none repeat scroll 0 0;
+    display: inline-block;
+    padding: 30px 20px 55px 20px;
+    position: relative;
+    width: 100%;
+    border: 1px solid #e9edf0;
+    margin: 0 0 15px;
+}
+.answers-heading{
+    color: #2a3440;
+    font-size: 24px;
+    margin: 12px 0;
+    text-decoration: underline;
+}
+.vote-icon{
+    font-size:17px;
+}
+
+.awesomeRating{
+    float: right;
+    width: 100%;
+    font-size: 20px;
+    position: relative;
+    left: 15px;
+}
+button, input, select, textarea {
+    margin: 10px 0;
+}
+.help-block{
+    text-align: left !important;
+    color:red !important;
+}

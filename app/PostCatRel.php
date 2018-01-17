@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostCatRel extends Model
 {
-    protected $table = "post_cat_rel";
+    protected $table = "post_cat_rels";
     public $timestamps = false;
     public function category()
 	{  
