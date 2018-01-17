@@ -237,8 +237,7 @@ $(document).ready(function(){
 			}
 		})
 	});
-	
-	$('.save-password-info').on('click',function(){
+	 	$('.save-password-info').on('click',function(){
 		$.ajax({
 			type:'POST',
 			url:'change_password',
@@ -251,6 +250,7 @@ $(document).ready(function(){
 	$('.save-work-info').on('click',function(){
 		var content = CKEDITOR.instances['biography'].getData();
 		alert(content);
+		
 		/*$.ajax({
 			type:'POST',
 			url:'save_work_info',
