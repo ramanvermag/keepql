@@ -9,7 +9,10 @@
                 </div>
             @endif
             <div class="col-md-9">
-            @foreach($posts as $post)
+            @foreach($results as $result)
+                <?php
+                    $post = $result->posts;
+                ?>
                 <div class="ques-desn">
                     <div class="quest-part1">
                         <div class="admin-img">
@@ -51,27 +54,9 @@
                             ?>
                         @endif
                     </span>
-                    <div class="vote-part">
-                        <a href="/post/{{$post->slug}}">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <?php
-                                $likes = 0; $dislikes = 0;
-                            ?>
-                            @foreach($post->answers as $ans)
-                                @foreach($ans->votes as $votes)
-                                    <?php 
-                                        $likes += $votes->like_status;
-                                        $dislikes += $votes->dislike_status;
-                                    ?>
-                                @endforeach
-                            @endforeach
-                            <li>
-                                <i class="fa fa-thumbs-o-up vote-icons " aria-hidden="true"></i> : {{ $likes }}
-                                <i class="fa fa-thumbs-o-down vote-icons" aria-hidden="true"></i> : {{ $dislikes }}
-                            </li>
-                            <li><a href="#">Answers<span>{{ $post->answers->count() }}</span></a></li>
-                            <li><a href="#">Views<span>{{ $post->views->count() }}</span></a></li>
-                        </ul>
+                    <div class="">
+                        <h4>Answer: </h4>
+                        <?= $result->answer ?>
                     </div>
                     <div class="social-share">
                         <div class="share-desn">    
@@ -94,7 +79,7 @@
             @endforeach
                 <div class="col-md-12">
                     <div class="pagination">
-                        {{ $posts->render() }}
+                        {{ $results->render() }}
                     </div>
                 </div>
             </div>

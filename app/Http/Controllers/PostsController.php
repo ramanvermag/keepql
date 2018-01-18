@@ -139,9 +139,8 @@ class PostsController extends Controller{
             return view('/home');
         }
         $userId = Crypt::decryptString($userId);
-        $results = PostAnswer::with('posts')->paginate(2);
-        $posts = json_decode(json_encode($results), true);
-        echo "<pre>"; print_r($posts);die;
+        $results = PostAnswer::with('posts')->with('user')->paginate(5);
+        return view('posts/view_user_answers')->with(compact('results'));
     }
     public function draft_or_pending_questions($userId='',$status=''){
         if(empty($userId) || empty($status) ){
