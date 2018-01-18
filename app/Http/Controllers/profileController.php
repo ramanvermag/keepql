@@ -8,14 +8,32 @@ use Auth;
 use Image;
 use App\User;
 use App\Country;
+use App\Answer;
+use App\Post;
+use DB;
 use Hash;
 use Illuminate\Support\Facades\Storage;
 use JildertMiedema\LaravelPlupload\Facades\Plupload;
+use Illuminate\Support\Facades\Crypt;
 
 class profileController extends Controller{
     public function profile(){
-        //'phone' => 'required|regex:/(01)[0-9]{9}/'
-    	return view('profile', array('user'=> Auth::User() ) );	
+        $userId = Auth::user()->id;
+        $user = User::where('id',$userId)->with('posts')->first();
+        $answersCount = Answer::where('user_id',$userId)->count();
+        $postViews = DB::table('views')
+                            ->join('posts','posts.id','=','views.post_id')
+                            ->where('posts.author_id',$userId)
+                            ->where('posts.status','PUBLISHED')
+                            ->count(DB::raw('DISTINCT post_id'));
+        $ratings = DB::table('ratings')
+                        ->selectRaw('round(avg(rating)) as sum')
+                        ->where('profile_rated','=',$userId)
+                        ->groupBy('profile_rated')
+                        ->get();
+        $pendingPostsCount = POST::where('author_id',$userId)->where('status','PENDING')->count();
+        $draftPostsCount = POST::where('author_id',$userId)->where('status','DRAFT')->count();
+    	return view('profile')->with(compact('user','answersCount','postViews','ratings','pendingPostsCount','draftPostsCount'));
     }
     public function profileEdit(Request $request){
         if( $request->hasFile('file') ){
@@ -85,7 +103,6 @@ class profileController extends Controller{
     }
     public function save_work_info(Request $request){
         $data = $request->all();
-        echo "<pre>"; print_r($data);die;
         if($data['work_company']=="" && $data['designation']=="" && $data['skills']=="" && $data['biography']==""){
             echo '<div class="alert alert-danger fade in alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Error!</strong> Please enter data before submit.</div>';die;
         }
@@ -96,7 +113,6 @@ class profileController extends Controller{
                     $user->$key = $value;
                 }
             }
-            //echo "<pre>"; print_r($user);die;
             $user->save();
             echo '<div class="alert alert-success fade in alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Success!</strong> Information updated successfully.</div>';
             die;

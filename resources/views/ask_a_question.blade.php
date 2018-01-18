@@ -31,6 +31,12 @@
   max-width: inherit;
 }
 </style>
+@if(!empty($errors))
+<?php //echo "<pre>"; print_r($errors); 
+?>
+@endif
+    
+
 <script src="https://cdn.ckeditor.com/4.8.0/standard/ckeditor.js"></script>
 <div class="login-section">
     <div class="container">
@@ -45,7 +51,8 @@
             <div class="form-group">
             	<label class="control-label col-md-4">Title</label>
                 <div class="col-md-5">
-                    <input type="text" id="title" class="form-control" name="title" placeholder="Title" required="true">
+                    <input type="hidden" name="id" value="@if(isset($postData['id'])) {{ Crypt::encryptString($postData['id']) }} @endif">
+                    <input type="text" id="title" class="form-control" name="title" placeholder="Title" required="true" value="@if(isset($postData['title']) AND !empty($postData['title'])) {{ $postData['title'] }} @endif">
                     @if ($errors->has('title'))
                         <span class="help-block">
                             <strong>{{ $errors->first('title') }}</strong>
@@ -56,7 +63,7 @@
             <div class="form-group">
             	<label class="control-label col-md-4">Slug</label>
                 <div class="col-md-5">
-                    <input type="text" id="slug" class="form-control" name="slug" placeholder="Slug" required="true">
+                    <input type="text" id="slug" class="form-control" name="slug" placeholder="Slug" required="true" value="@if(isset($postData['slug']) AND !empty($postData['slug'])) {{ $postData['slug'] }} @endif">
                     @if ($errors->has('slug'))
                         <span class="help-block">
                             <strong>{{ $errors->first('slug') }}</strong>
@@ -67,7 +74,7 @@
             <div class="form-group">
             	<label class="control-label col-md-4">Description</label>
                 <div class="col-md-5">
-                    <textarea class="form-control ckeditor" name="body" required="true" ></textarea>
+                    <textarea class="form-control ckeditor" name="body" required="true" >@if(isset($postData['body']) AND !empty($postData['body'])) {{ $postData['body'] }} @endif</textarea>
                     @if ($errors->has('body'))
                         <span class="help-block">
                             <strong>{{ $errors->first('body') }}</strong>
@@ -81,7 +88,7 @@
                    	<select class="form-control" name="category_id" required="true">
                    		<option value="">Select Category</option>
                    		@foreach($allCategories as $cat)
-                   			<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                   			<option value="{{ $cat->id }}" @if(isset($postData['category_id']) AND !empty($postData['category_id']) AND $postData['category_id']==$cat->id) {{ "selected" }} @endif>{{ $cat->name }}</option>
                    		@endforeach
                    	</select>
                     @if ($errors->has('category_id'))
@@ -91,24 +98,29 @@
                     @endif
                 </div>
             </div>
+            <?php
+                $statusArray = array(
+                    'PUBLISHED','DRAFT','PENDING'
+                );
+            ?>
             <div class="form-group">
             	<label class="control-label col-md-4">Status</label>
                 <div class="col-md-5">
                    	<select class="form-control" name="status" required="true">
                    		<option value="">Select Status</option>
-                   		<option value="PUBLISHED">Published</option>
-                   		<option value="DRAFT">Draft</option>
-                   		<option value="PENDING">Pending</option>
+                   		@foreach($statusArray as $status)
+                        <option value="{{ $status }}"  @if(isset($postData['status']) AND !empty($postData['status']) AND $postData['status']==$status) {{ "selected" }} @endif>{{ $status }}</option>
+                        @endforeach
                    	</select>
                 </div>
             </div>
             <div class="form-group">
             	<label class="control-label col-md-4">Tags</label>
                 <div class="col-md-5">
-                   	<input type="text" class="form-control" name="tags" data-role="tagsinput">
-                    @if ($errors->has('tags'))
+                   	<input type="text" class="form-control" name="tags_values"  value="@if(isset($postData['tags']) AND !empty($postData['tags'])) {{ $postData['tags'] }} @endif" data-role="tagsinput" >
+                    @if ($errors->has('tags_values'))
                         <span class="help-block">
-                            <strong>{{ $errors->first('tags') }}</strong>
+                            <strong>{{ $errors->first('tags_values') }}</strong>
                         </span>
                     @endif
                 </div>
@@ -116,24 +128,28 @@
             <div class="form-group">
             	<label class="control-label col-md-4">SEO Title</label>
                 <div class="col-md-5">
-                   	<input type="text" class="form-control" name="seo_title">
+                   	<input type="text" class="form-control" name="seo_title" value="@if(isset($postData['seo_title']) AND !empty($postData['seo_title'])) {{ $postData['seo_title'] }} @endif">
                 </div>
             </div>
             <div class="form-group">
             	<label class="control-label col-md-4">Meta Description</label>
                 <div class="col-md-5">
-                   	<textarea class="form-control" name="meta_description"></textarea>
+                   	<textarea class="form-control" name="meta_description">@if(isset($postData['meta_description']) AND !empty($postData['meta_description'])) {{ $postData['meta_description'] }} @endif</textarea>
                 </div>
             </div>
             <div class="form-group">
             	<label class="control-label col-md-4">Meta Keywords</label>
                 <div class="col-md-5">
-                   	<textarea class="form-control" name="meta_keywords"></textarea>
+                   	<textarea class="form-control" name="meta_keywords">@if(isset($postData['meta_keywords']) AND !empty($postData['meta_keywords'])) {{ $postData['meta_keywords'] }} @endif</textarea>
                 </div>
             </div>
             <div class="form-group">
             	<label class="control-label col-md-4">Upload Image</label>
                 <div class="col-md-5">
+                    @if(isset($postData['image']) AND !empty($postData['image']))
+                    <img src="{{Storage::url('')}}{{ $postData['image'] }}" style="width:200px;height:150px;">
+                    <input type="hidden" name="old_image" id="old-image" value="{{ $postData['image'] }}">
+                    @endif
                 	<input type="file" name="image" class="form-control">
                     @if ($errors->has('image'))
                         <span class="help-block">

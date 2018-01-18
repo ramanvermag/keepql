@@ -360,3 +360,26 @@ button, input, select, textarea {
     text-align: left !important;
     color:red !important;
 }
+.user-sidebar-list{
+    float:left;
+    width:100%;
+}
+.user-sidebar-list li{
+    float:left;
+    width:100%;
+    list-style: inside;
+}
+.publish-button a {
+    float: right;
+    background: #EC4F4F;
+    color: #fff;
+    padding: 8px 26px;
+    border-radius: 3px;
+    font-size: 13px;
+    position: absolute;
+    top: 3px;
+    right: 6px;
+}
+textarea.form-control {
+    height: 100px !important;
+}

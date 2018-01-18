@@ -47,33 +47,54 @@
                     <div class="">
                         <div class="col-md-12">
                             <ul class="user-info">
-                                <li><i class="fa fa-briefcase" aria-hidden="true"></i> Works at Unique Coders</li>
-                                <li><i class="fa fa-user-circle-o" aria-hidden="true"></i> Working as Software Engineer</li>
-                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> Lives in Anaheim USA</li>
-                                <li><i class="fa fa-history" aria-hidden="true"></i> Member Since 5 years, 1 months</li>
-                                <li><i class="fa fa-eye" aria-hidden="true"></i> Last logged in 5 hours ago </li>
-                                <li><i class="fa fa-globe" aria-hidden="true"></i> Personal Blog uniquecoders.in</li>
-                            </ul>        
+                                <li>Published Questions</li>
+                                <li>Draft Questions</li>
+                                <li>Pending Questions</li>
+                                <li>Favorite Questions</li>
+                                <li>Views</li>
+                            </ul>      
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
+                @if(!empty($userData[0]['biography']))
                 <div class="pro-sec pro-sec-1">
                     <h4>Biography</h4>
                     <span class="quotes pull-left"><i class="fa fa-quote-left" aria-hidden="true"></i></span>
                     <span class="quotes pull-right"><i class="fa fa-quote-right" aria-hidden="true"></i></span>
-                    <p class="bio">I am a full-stack Web Application Developer and Software Developer. I am both driven and self-motivated, and I am constantly experimenting with new technologies and techniques. Always inspired to learn and acomplish new opportunities.</p>
+                    <p class="bio"><?= $userData[0]['biography'] ?></p>
                 </div>
+                @endif
                 <div class="pro-sec ">
-                    <ul>
-                        <li><i class="fa fa-briefcase" aria-hidden="true"></i> Works at Unique Coders</li>
-                        <li><i class="fa fa-user-circle-o" aria-hidden="true"></i> Working as Software Engineer</li>
-                        <li><i class="fa fa-map-marker" aria-hidden="true"></i> Lives in Anaheim USA</li>
-                        <li><i class="fa fa-history" aria-hidden="true"></i> Member Since 5 years, 1 months</li>
-                        <li><i class="fa fa-eye" aria-hidden="true"></i> Last logged in 5 hours ago </li>
-                        <li><i class="fa fa-globe" aria-hidden="true"></i> Personal Blog uniquecoders.in</li>
-                    </ul>        
+                    <ul class="user-info">
+                        @if(!empty($userData[0]['work_company']))
+                            <li><i class="fa fa-briefcase" aria-hidden="true"></i> Works at {{ $userData[0]['work_company'] }}</li>
+                        @endif
+                        @if(!empty($userData[0]['designation']))
+                            <li><i class="fa fa-user-circle-o" aria-hidden="true"></i> Working as {{ $userData[0]['designation'] }}</li>
+                        @endif
+                        @if(!empty($userData[0]['country']) && !empty($userData[0]['state']))
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> Lives in {{ $userData[0]['country'] }} {{ $userData[0]['state'] }}</li>
+                        @endif
+                        <li>
+                            <?php
+                                $datetime1 = new DateTime($userData[0]['created_at']);
+                                $datetime2 = new DateTime();
+                                $interval = $datetime1->diff($datetime2);
+                            ?>
+                            <i class="fa fa-history" aria-hidden="true"></i> 
+                            Member Since 
+                            <?php 
+                                if(!empty($interval->y)){ echo $interval->y." years"; } 
+                                if(!empty($interval->m)){ echo $interval->m." months"; }
+                                if(!empty($interval->d)){ echo $interval->d." days"; }
+                            ?>
+                        </li>
+                        @if($userData[0]['last_logged_in'])
+                            <li><i class="fa fa-eye" aria-hidden="true"></i> Last logged in at {{ date('d M,Y H:i:s',strtotime($userData[0]['last_logged_in'])) }}</li>
+                        @endif
+                    </ul>         
                 </div>
                 <div class="pro-sec pro-sec-3">
                     <h4>Top Tags</h4>

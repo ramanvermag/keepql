@@ -188,13 +188,13 @@
 		                <div class="form-group">
 		                	<label class="control-label col-md-4">Your Skills</label>
 		                    <div class="col-md-7">
-		                        <input type="text" class="form-control" name="skills" value="@if(isset(Auth::user()->skills)) {{ Auth::user()->skills }} @endif" required="true" designation data-role="tagsinput">
+		                        <input type="text" class="form-control" name="skills" value="@if(isset(Auth::user()->skills)) {{ Auth::user()->skills }} @endif" required="true" data-role="tagsinput">
 		                    </div>
 		                </div>
 		                <div class="form-group">
 		                	<label class="control-label col-md-4">Biography</label>
 		                    <div class="col-md-7">
-		                        <textarea class="form-control ckeditor" id="bio-data" name="biography"></textarea>
+		                        <textarea class="form-control ckeditor" id="bio-data" name="biography">@if(isset(Auth::user()->biography)) {{ Auth::user()->biography }} @endif</textarea>
 		                    </div>
 		                </div>
 		                <div class="form-group">
@@ -248,17 +248,16 @@ $(document).ready(function(){
 		});
 	});
 	$('.save-work-info').on('click',function(){
-		var content = CKEDITOR.instances['biography'].getData();
-		alert(content);
-		
-		/*$.ajax({
+		var content = CKEDITOR.instances['bio-data'].getData();
+		$('#bio-data').val(content);
+		$.ajax({
 			type:'POST',
 			url:'save_work_info',
 			data:$('#work-info-form').serialize(),
 			success:function(resp){
 				$('.work-info-messages').html(resp);
 			}
-		})*/
+		})
 	});
 	$('#user-logo').on('change',function(input){
 	    readURL(this);

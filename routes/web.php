@@ -46,9 +46,13 @@ Route::match(array('GET', 'POST'), '/edit-profile', 'profileController@profileEd
 Route::post('change_basic_info', 'profileController@change_basic_info');
 Route::post('change_password', 'profileController@change_password');
 Route::get('ask-a-question', 'PostsController@ask_a_question');
+Route::get('ask-a-question/{id}', 'PostsController@ask_a_question');
 Route::post('saveQuestion', 'PostsController@saveQuestion');
 Route::get('view-user-profile/{id}', 'PostsController@view_user_profile');
-Route::get('view-questions/{id}', 'HomeController@index');
+Route::get('view-questions/{id}/{status}', 'HomeController@index');
 Route::get('view-questions', 'HomeController@index');
 Route::get('view-user-answers/{id}', 'PostsController@view_user_answers');
 Route::post('save_work_info','profileController@save_work_info');
+Route::get('draft-questions/{id}/{status}', 'PostsController@draft_or_pending_questions');
+Route::get('pending-questions/{id}/{status}', 'PostsController@draft_or_pending_questions');
+Route::get('posts-with-views/{id}','PostsController@posts_having_views');

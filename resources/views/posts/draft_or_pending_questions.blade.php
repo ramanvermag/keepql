@@ -22,14 +22,18 @@
                         <div class="admin-nav">
                             <ul>
                                 <li><a href="#"><span>in</span> 
+
                                 <?php 
+                                    
                                     $categories = array();
                                     foreach($post->category as $cat){
                                         $categories[]= $cat->name;
                                     }
                                     $cat = implode(" | ",$categories);
+                                   
                                 ?>
                                 {{ isset($cat) ? $cat : 'undefined' }}
+
                                 </a></li>
                             </ul>
                             <div data-user="{{ $post->author->id }}" class="awesomeRating"></div>
@@ -51,28 +55,6 @@
                             ?>
                         @endif
                     </span>
-                    <div class="vote-part">
-                        <a href="/post/{{$post->slug}}">Answer it <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-                        <ul class="admin-votes">
-                            <?php
-                                $likes = 0; $dislikes = 0;
-                            ?>
-                            @foreach($post->answers as $ans)
-                                @foreach($ans->votes as $votes)
-                                    <?php 
-                                        $likes += $votes->like_status;
-                                        $dislikes += $votes->dislike_status;
-                                    ?>
-                                @endforeach
-                            @endforeach
-                            <li>
-                                <i class="fa fa-thumbs-o-up vote-icons " aria-hidden="true"></i> : {{ $likes }}
-                                <i class="fa fa-thumbs-o-down vote-icons" aria-hidden="true"></i> : {{ $dislikes }}
-                            </li>
-                            <li><a href="#">Answers<span>{{ $post->answers->count() }}</span></a></li>
-                            <li><a href="#">Views<span>{{ $post->views->count() }}</span></a></li>
-                        </ul>
-                    </div>
                     <div class="social-share">
                         <div class="share-desn">    
                             <h5><i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -82,12 +64,8 @@
                             <h5><i class="fa fa-map-marker" aria-hidden="true"></i>{{ $post->author->country }}</h5>
                             @endif
                         </div>
-                        <div class="share-section">
-                            <?php echo Share::page(url('post')."/".$post->slug, 'Keep Questioning')
-                            ->facebook()
-                            ->twitter()
-                            ->googlePlus()
-                            ->linkedin('Extra linkedin summary can be passed here'); ?>
+                        <div class="publish-button">
+                            <a href="/ask-a-question/{{ Crypt::encryptString($post->id) }}">Publish <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>

@@ -21,15 +21,15 @@ class Post extends Model{
 	    return $this->hasMany('App\Answer')->with('author')->with('votes')->with('user_votes');
 	}
 	public function views(){
-	    return $this->hasMany('App\View');
+	    return $this->hasMany('App\Views');
 	}
 	public static function saveViews($postId=''){
 		if(!empty($postId)) {
 			$user_id = Auth::user()->id;
-			$view = View::where('post_id',$postId)
+			$view = Views::where('post_id',$postId)
     				->where('user_id',$user_id)->first();
     		if(empty($view)){
-	    		$viewsData = new View;
+	    		$viewsData = new Views;
 	    		$viewsData->post_id = $postId;
 	    		$viewsData->user_id = $user_id;
 	    		$viewsData->save();

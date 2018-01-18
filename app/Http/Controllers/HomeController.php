@@ -20,17 +20,22 @@ class HomeController extends Controller{
 
     public function __construct(){
         $this->middleware('auth');
+        // calculate result for showing in right sidebar
         View::share('sidebarTotalQuestions', POST::where('posts.status','PUBLISHED')->count());
         View::share('sidebarTotalUsers', User::count());
         View::share('topQuestions', POST::where('posts.status','PUBLISHED')->limit(5)->get());
     }
 
     public function index($userId='') {
+        // find questions to be shown on home page
         $userCondition = '';
         if(!empty($userId)){
+            $userId = Crypt::decryptString($userId);
+            //  questions posted by particular users
             $posts = POST::with('category')->with('author')->with('answers')->with('views')->where('posts.status','PUBLISHED')->where('posts.author_id',$userId)->paginate(5);
         }
         else{
+            // all questions
             $posts = POST::with('category')->with('author')->with('answers')->with('views')->where('posts.status','PUBLISHED')->paginate(5);
         }
         /*$posts = json_decode(json_encode($posts), true);
