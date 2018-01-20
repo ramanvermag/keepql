@@ -10,9 +10,12 @@ class Post extends Model{
     public function author(){
 	    return $this->belongsTo(User::class);
 	}
-	public function category(){
+	/*public function category(){
 	    //return $this->hasMany(PostCatRel::class)->with("category");
 	    return $this->hasMany('App\Category','id','category_id');
+	}*/
+	public function category(){
+	    return $this->hasMany(PostCatRel::class)->with("category");
 	}
 	public static function findBySlug($slug){
 		return static::with('category')->with('answers')->where('slug', $slug)->first();

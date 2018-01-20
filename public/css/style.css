@@ -383,3 +383,11 @@ button, input, select, textarea {
 textarea.form-control {
     height: 100px !important;
 }
+.bootstrap-select.form-control{
+    background: unset;
+}
+.user-selected-categories li{
+    padding:5px 14px !important;
+    float:left;
+    list-style: inside;
+}

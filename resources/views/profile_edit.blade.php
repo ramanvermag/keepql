@@ -198,6 +198,25 @@
 		                    </div>
 		                </div>
 		                <div class="form-group">
+		                	<label class="control-label col-md-4">Category</label>
+		                    <div class="col-md-7">
+		                    	<?php
+		                    		$categories = '';
+		                    		if(!empty($user->category_ids)){
+		                    			$categories = explode(',',$user->category_ids);
+		                    		}
+		                    	?>
+		                        <select name="category_ids[]" class="selectpicker form-control" data-live-search="true" multiple data-max-options="5">
+							        @if(!empty($allCategories))
+							        	@foreach($allCategories as $category)
+							        	<option value="{{ $category->id }}" <?php if(!empty($categories)){ if(in_array($category->id,$categories)){ echo "selected"; } } ?>>{{ $category->name }}</option>
+							        	@endforeach
+							        @endif
+							        <option >Tom Foolery</option>
+							  	</select>
+		                    </div>
+		                </div>
+		                <div class="form-group">
 		                    <div class="col-md-12">
 		                        <span class="button">
 		                        	<button type="button" class="btn btn-danger save-work-info">Save Changes</button>
@@ -212,6 +231,8 @@
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
 CKEDITOR.replace('biography');
 $.ajaxSetup({

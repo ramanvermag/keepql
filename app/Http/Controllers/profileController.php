@@ -10,6 +10,7 @@ use App\User;
 use App\Country;
 use App\Answer;
 use App\Post;
+use App\Category;
 use DB;
 use Hash;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,11 @@ class profileController extends Controller{
     public function profile(){
         $userId = Auth::user()->id;
         $user = User::where('id',$userId)->with('posts')->first();
+        $userCategories = array();
+        if(!empty($user->category_ids)){
+            $userCategories = Category::whereIn('id',explode(',',$user->category_ids))->get();
+        }
+        /*$userCategories = json_decode(json_encode($userCategories));*/
         $answersCount = Answer::where('user_id',$userId)->count();
         $postViews = DB::table('views')
                             ->join('posts','posts.id','=','views.post_id')
@@ -33,7 +39,7 @@ class profileController extends Controller{
                         ->get();
         $pendingPostsCount = POST::where('author_id',$userId)->where('status','PENDING')->count();
         $draftPostsCount = POST::where('author_id',$userId)->where('status','DRAFT')->count();
-    	return view('profile')->with(compact('user','answersCount','postViews','ratings','pendingPostsCount','draftPostsCount'));
+    	return view('profile')->with(compact('user','answersCount','postViews','ratings','pendingPostsCount','draftPostsCount','userCategories'));
     }
     public function profileEdit(Request $request){
         if( $request->hasFile('file') ){
@@ -48,7 +54,10 @@ class profileController extends Controller{
             $user->avatar = 'users/November2017/'.$filename;
             $user->save();
         }
-        return view('profile_edit', array('user'=> Auth::User(),'allCountries'=>Country::all() )); 
+        $user = Auth::User();
+        $allCountries = Country::all();
+        $allCategories = Category::all();
+        return view('profile_edit')->with(compact('user','allCountries','allCategories')); 
     }
     public function updateAvatar(Request $request){
         $abs_path='';
@@ -103,11 +112,13 @@ class profileController extends Controller{
     }
     public function save_work_info(Request $request){
         $data = $request->all();
-        if($data['work_company']=="" && $data['designation']=="" && $data['skills']=="" && $data['biography']==""){
+        if($data['work_company']=="" && $data['designation']=="" && $data['skills']=="" && $data['biography']=="" && $data['category_ids']=="" ){
             echo '<div class="alert alert-danger fade in alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a><strong>Error!</strong> Please enter data before submit.</div>';die;
         }
         else{
             $user = User::find(Auth::user()->id);
+            $user->category_ids = implode(',',$data['category_ids']);
+            unset($data['category_ids']);
             foreach($data as $key=>$value){
                 if(!empty($value)){
                     $user->$key = $value;

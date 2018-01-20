@@ -160,6 +160,16 @@
                         @endif
                     </ul>         
                 </div>
+                @if(!empty($userCategories))
+                <div class="pro-sec pro-sec-3 user-selected-categories">
+                    <h4>Categories</h4>
+                    <ul>
+                        @foreach($userCategories as $cat)
+                        <li>{{ $cat->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
                 <div class="pro-sec pro-sec-3">
                     <h4>Top Tags</h4>
                     <ul>
